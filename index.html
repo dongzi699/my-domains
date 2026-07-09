@@ -1,128 +1,221 @@
+<!-- 
+2026.7.9
+
+大部分代码由豆包AI生成
+-->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>我的域名管理面板</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#3b82f6',
-            warn: '#f59e0b',
-            danger: '#ef4444',
-            success: '#10b981',
-            dark: '#0f172a',
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-          },
-        },
-      }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="东子,个人主页,个人网站,东子个人主页" />
+  <meta name="description" content="东子个人主页,欢迎小伙伴访问主页来了解我哦~" />
+  <title>东子个人主页</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", sans-serif;
     }
-  </script>
-  <style type="text/tailwindcss">
-    @layer utilities {
-      .glass {
-        background: rgba(255,255,255,0.08);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255,255,255,0.12);
-      }
-      .glass-dark {
-        background: rgba(15,23,42,0.75);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255,255,255,0.1);
-      }
-      .text-shadow {
-        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      }
-      .card-hover {
-        transition: all 0.3s ease;
-      }
-      .card-hover:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.25);
-      }
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #f0f0f0;
+    }
+    /* 粒子画布铺满全屏 */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0f141c;
+      z-index: -1;
+    }
+    /* 主容器居中 */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    /* 头像样式 */
+    .avatar {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #64a8ff;
+      box-shadow: 0 0 25px rgba(100, 168, 255, 0.3);
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+    .avatar:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 35px rgba(100, 168, 255, 0.5);
+    }
+    /* 昵称 */
+    .nickname {
+      font-size: 36px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+    }
+    /* 个人简介 */
+    .intro {
+      max-width: 700px;
+      margin: 0 auto 60px;
+      font-size: 17px;
+      line-height: 1.8;
+      color: #c5cdd8;
+    }
+    /* 成果标题 */
+    .section-title {
+      font-size: 26px;
+      margin-bottom: 32px;
+      position: relative;
+    }
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: #64a8ff;
+      margin: 12px auto 0;
+    }
+    /* 项目卡片容器 */
+    .project-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    /* 项目卡片 */
+    .project-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(100, 168, 255, 0.15);
+      padding: 28px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .project-card:hover {
+      background: rgba(100, 168, 255, 0.12);
+      border-color: rgba(100, 168, 255, 0.4);
+      transform: translateY(-6px);
+    }
+    .project-name {
+      font-size: 19px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .project-desc {
+      font-size: 14px;
+      color: #a0aabc;
+      line-height: 1.6;
+    }
+    /* 底部留白 */
+    footer {
+      margin-top: 80px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .project-card-a{
+      text-decoration: none;
+      color:#f0f0f0;
     }
   </style>
 </head>
-<body class="bg-dark text-gray-100 min-h-screen relative overflow-x-hidden">
-  <!-- 粒子特效画布 -->
-  <canvas id="particles" class="fixed inset-0 -z-10 w-full h-full"></canvas>
+<body>
+  <!-- 粒子背景画布 -->
+  <canvas id="particles-canvas"></canvas>
 
-  <div class="container mx-auto px-4 py-10 relative z-10">
-    <!-- 头部标题 -->
-    <header class="text-center mb-12">
-      <h1 class="text-[clamp(2rem,5vw,3.2rem)] font-bold text-white text-shadow mb-3">
-        <i class="fa fa-globe text-primary mr-2"></i>我的域名资产列表
-      </h1>
-      <p class="text-gray-300 text-lg">自动读取 data.json | 按到期时间排序 | 实时计算剩余到期天数</p>
-      <div id="totalTip" class="mt-4 text-gray-400"></div>
-    </header>
+  <div class="container">
+    <!-- 头像区域 -->
+    <img class="avatar" src="https://bu.dusays.com/2026/07/09/6a4f74df696d4.jpg" alt="个人头像">
+    <!-- 昵称 -->
+    <h1 class="nickname">东子</h1>
+    <!-- 个人简介 -->
+    <p class="intro">
+      热爱前端开发，平时喜欢做一些小案例。不是在写bug，就是在写bug的路上。
+    </p>
 
-    <!-- 切换视图按钮 -->
-    <div class="flex justify-center gap-4 mb-8">
-      <button id="tableBtn" class="px-6 py-2 rounded-lg glass text-white active:bg-primary/30">
-        <i class="fa fa-table mr-1"></i>表格视图
-      </button>
-      <button id="cardBtn" class="px-6 py-2 rounded-lg glass text-white hover:bg-primary/20">
-        <i class="fa fa-th-large mr-1"></i>卡片视图
-      </button>
+    <!-- 展示区域 -->
+    <h2 class="section-title">快速访问</h2>
+    <div class="project-list">
+
+      <a class="project-card-a" href="/domain.html" target="_blank">
+        <div class="project-card">
+          <h3 class="project-name">域名面板</h3>
+          <p class="project-desc">简约美观展示域名到期时间</p>
+        </div>
+      </a>
+
+      <a class="project-card-a" href="https://bill.daosanjur.cn" target="_blank">
+        <div class="project-card">
+          <h3 class="project-name">记账本API</h3>
+          <p class="project-desc">简单记账功能</p>
+        </div>
+      </a>
+
+      <a class="project-card-a" href="https://api.daosanjur.cn" target="_blank">
+        <div class="project-card">
+          <h3 class="project-name">日记本API</h3>
+          <p class="project-desc">每一天都是限量版</p>
+        </div>
+      </a>
+
+      <a class="project-card-a" href="https://capi.daosanjur.cn" target="_blank">
+        <div class="project-card">
+          <h3 class="project-name">课程表API</h3>
+          <p class="project-desc">今日课程简单明了</p>
+        </div>
+      </a>
+
+      <a class="project-card-a" href="https://cxapi.daosanjur.cn" target="_blank">
+        <div class="project-card">
+          <h3 class="project-name">数据查询API</h3>
+          <p class="project-desc">方便使用者查询数据</p>
+        </div>
+      </a>
+
+      <a class="project-card-a" href="https://zk.daosanjur.cn" target="_blank">
+        <div class="project-card">
+          <h3 class="project-name">仿考试系统API</h3>
+          <p class="project-desc">模拟考试全流程</p>
+        </div>
+      </a>
+
     </div>
 
-    <!-- 加载提示 -->
-    <div id="loading" class="text-center py-20 text-gray-400 text-xl">
-      <i class="fa fa-spinner fa-spin text-3xl mb-3 block"></i>
-      正在加载 data.json 域名数据并自动排序...
-    </div>
-
-    <!-- 无数据提示 -->
-    <div id="emptyTip" class="hidden text-center py-20 text-gray-400 text-xl">
-      <i class="fa fa-file-text-o text-4xl mb-4 block"></i>
-      未读取到域名数据，请检查同目录下 data.json 文件格式是否正确
-    </div>
-
-    <!-- 表格视图容器 -->
-    <div id="tableView" class="hidden glass-dark rounded-xl p-6 overflow-x-auto">
-      <table class="w-full text-left">
-        <thead>
-          <tr class="border-b border-gray-700">
-            <th class="py-4 px-3">序号</th>
-            <th class="py-4 px-3">域名</th>
-            <th class="py-4 px-3">注册时间</th>
-            <th class="py-4 px-3">到期时间</th>
-            <th class="py-4 px-3">剩余天数</th>
-            <th class="py-4 px-3">状态</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-    </div>
-
-    <!-- 卡片视图容器 -->
-    <div id="cardView" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+    <footer>
+      © 2026 东子个人主页 | Code by Doubao
+    </footer>
   </div>
 
   <script>
-    // ===================== 粒子背景特效 =====================
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let w, h, particles = [];
+    // 粒子特效逻辑
+    const canvas = document.getElementById("particles-canvas");
+    const ctx = canvas.getContext("2d");
+    let width, height;
+    let particles = [];
 
+    // 适配窗口尺寸
     function resizeCanvas() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
     }
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
+    // 粒子类
     class Particle {
       constructor() {
-        this.x = Math.random() * w;
-        this.y = Math.random() * h;
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
         this.radius = Math.random() * 1.2 + 0.3;
         this.speedX = Math.random() * 0.6 - 0.3;
         this.speedY = Math.random() * 0.6 - 0.3;
@@ -130,176 +223,59 @@
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        if (this.x < 0 || this.x > w) this.speedX *= -1;
-        if (this.y < 0 || this.y > h) this.speedY *= -1;
+        // 边界回弹
+        if (this.x < 0 || this.x > width) this.speedX *= -1;
+        if (this.y < 0 || this.y > height) this.speedY *= -1;
       }
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(140, 180, 255, 0.6)';
+        ctx.fillStyle = "rgba(100, 168, 255, 0.6)";
         ctx.fill();
       }
     }
 
-    // 生成粒子
-    function initParticles(count = 120) {
+    // 初始化粒子
+    function initParticles(count = 80) {
       particles = [];
-      for(let i=0; i<count; i++) particles.push(new Particle());
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle());
+      }
     }
+    initParticles();
 
     // 粒子连线
     function drawLine(p1, p2) {
       const dx = p1.x - p2.x;
       const dy = p1.y - p2.y;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if(dist < 100) {
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 100) {
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(100, 160, 255, ${0.6 - dist/100})`;
-        ctx.lineWidth = 0.5;
         ctx.moveTo(p1.x, p1.y);
         ctx.lineTo(p2.x, p2.y);
+        ctx.strokeStyle = `rgba(100, 168, 255, ${0.3 - dist / 350})`;
+        ctx.lineWidth = 0.5;
         ctx.stroke();
       }
     }
 
+    // 动画循环
     function animate() {
-      ctx.clearRect(0,0,w,h);
-      particles.forEach(p=>{
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
         p.update();
         p.draw();
-      })
-      for(let i=0; i<particles.length; i++){
-        for(let j=i+1; j<particles.length; j++){
+      });
+      // 两两连线
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
           drawLine(particles[i], particles[j]);
         }
       }
       requestAnimationFrame(animate);
     }
-    initParticles();
     animate();
 
-    // ===================== 域名数据处理逻辑 =====================
-    const loadingEl = document.getElementById('loading');
-    const emptyTip = document.getElementById('emptyTip');
-    const tableView = document.getElementById('tableView');
-    const cardView = document.getElementById('cardView');
-    const tableBody = document.getElementById('tableBody');
-    const totalTip = document.getElementById('totalTip');
-    const tableBtn = document.getElementById('tableBtn');
-    const cardBtn = document.getElementById('cardBtn');
-
-    // 视图切换
-    tableBtn.onclick = ()=>{
-      tableView.classList.remove('hidden');
-      cardView.classList.add('hidden');
-      tableBtn.classList.add('bg-primary/30');
-      cardBtn.classList.remove('bg-primary/30');
-    }
-    cardBtn.onclick = ()=>{
-      tableView.classList.add('hidden');
-      cardView.classList.remove('hidden');
-      cardBtn.classList.add('bg-primary/30');
-      tableBtn.classList.remove('bg-primary/30');
-    }
-
-    // 计算剩余天数
-    function getRemainDays(expireDateStr) {
-      const now = new Date();
-      now.setHours(0,0,0,0);
-      const expire = new Date(expireDateStr);
-      expire.setHours(0,0,0,0);
-      const diffMs = expire - now;
-      const diffDay = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-      return diffDay;
-    }
-
-    // 获取状态样式文字
-    function getStatus(days) {
-      if(days < 0) return {text:'已过期', cls:'text-danger bg-danger/10'};
-      if(days <= 30) return {text:'即将到期', cls:'text-warn bg-warn/10'};
-      return {text:'正常', cls:'text-success bg-success/10'};
-    }
-
-    // 渲染页面数据（新增自动排序逻辑）
-    function renderData(list) {
-      loadingEl.classList.add('hidden');
-      if(!Array.isArray(list) || list.length === 0) {
-        emptyTip.classList.remove('hidden');
-        return;
-      }
-      emptyTip.classList.add('hidden');
-
-      // ========== 核心新增：按到期时间排序（近的在前，过期排最上面） ==========
-      const sortedList = [...list].sort((a, b) => {
-        const timeA = new Date(a.expiredTime).getTime();
-        const timeB = new Date(b.expiredTime).getTime();
-        return timeA - timeB;
-      });
-
-      totalTip.innerHTML = `<i class="fa fa-database"></i> 共收录 <span class="text-primary font-bold text-xl">${sortedList.length}</span> 个域名（已按到期时间从近到远自动排序）`;
-
-      // 清空旧内容
-      tableBody.innerHTML = '';
-      cardView.innerHTML = '';
-
-      sortedList.forEach((item, idx)=>{
-        const { name, registeredTime, expiredTime } = item;
-        const remain = getRemainDays(expiredTime);
-        const status = getStatus(remain);
-
-        // ========== 表格行 ==========
-        const tr = document.createElement('tr');
-        tr.className = 'border-b border-gray-800 hover:bg-white/5 transition';
-        tr.innerHTML = `
-          <td class="py-4 px-3">${idx+1}</td>
-          <td class="py-4 px-3 font-semibold text-primary">${name}</td>
-          <td class="py-4 px-3 text-gray-300">${registeredTime}</td>
-          <td class="py-4 px-3 text-gray-300">${expiredTime}</td>
-          <td class="py-4 px-3 font-bold ${remain <=30 ? 'text-warn' : remain<0 ? 'text-danger' : 'text-success'}">${remain} 天</td>
-          <td class="py-4 px-3"><span class="px-3 py-1 rounded-full text-sm ${status.cls}">${status.text}</span></td>
-        `;
-        tableBody.appendChild(tr);
-
-        // ========== 卡片 ==========
-        const card = document.createElement('div');
-        card.className = 'glass-dark rounded-xl p-5 card-hover';
-        card.innerHTML = `
-          <div class="flex justify-between items-start mb-4">
-            <h3 class="text-xl font-bold text-primary">${name}</h3>
-            <span class="px-3 py-1 rounded-full text-sm ${status.cls}">${status.text}</span>
-          </div>
-          <div class="space-y-2 text-gray-300 text-sm">
-            <p><i class="fa fa-calendar-plus-o mr-2 text-gray-400"></i>注册：${registeredTime}</p>
-            <p><i class="fa fa-calendar-check-o mr-2 text-gray-400"></i>到期：${expiredTime}</p>
-            <p class="mt-4 text-lg font-bold ${remain <=30 ? 'text-warn' : remain<0 ? 'text-danger' : 'text-success'}">
-              <i class="fa fa-clock-o mr-2"></i>剩余 ${remain} 天
-            </p>
-          </div>
-        `;
-        cardView.appendChild(card);
-      })
-
-      // 默认展示表格视图
-      tableView.classList.remove('hidden');
-      tableBtn.classList.add('bg-primary/30');
-    }
-
-    // 读取同目录 data.json
-    async function loadJson() {
-      try {
-        const res = await fetch('./data.json');
-        if(!res.ok) throw new Error('文件不存在');
-        const data = await res.json();
-        renderData(data);
-      } catch(err) {
-        loadingEl.classList.add('hidden');
-        emptyTip.classList.remove('hidden');
-        console.error('读取data.json失败：', err);
-      }
-    }
-
-    // 页面加载完成读取数据
-    window.onload = loadJson;
   </script>
 </body>
 </html>
