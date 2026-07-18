@@ -1,9 +1,5 @@
 <!-- 
-2026.7.9
-
-大部分代码由豆包AI生成
-
-2026.7.17 添加内容
+2026.7.9首次创建
 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -13,125 +9,16 @@
   <meta name="keywords" content="东子,个人主页,个人网站,东子个人主页" />
   <meta name="description" content="东子个人主页,欢迎小伙伴访问主页来了解我哦~" />
   <title>东子个人主页</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Microsoft YaHei", sans-serif;
-    }
-    body {
-      min-height: 100vh;
-      overflow-x: hidden;
-      color: #f0f0f0;
-    }
-    /* 粒子画布铺满全屏 */
-    #particles-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #0f141c;
-      z-index: -1;
-    }
-    /* 主容器居中 */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 60px 20px;
-      text-align: center;
-    }
-    /* 头像样式 */
-    .avatar {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #64a8ff;
-      box-shadow: 0 0 25px rgba(100, 168, 255, 0.3);
-      margin-bottom: 24px;
-      transition: all 0.3s ease;
-    }
-    .avatar:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 35px rgba(100, 168, 255, 0.5);
-    }
-    /* 昵称 */
-    .nickname {
-      font-size: 36px;
-      font-weight: 600;
-      margin-bottom: 16px;
-      letter-spacing: 2px;
-    }
-    /* 个人简介 */
-    .intro {
-      max-width: 700px;
-      margin: 0 auto 60px;
-      font-size: 17px;
-      line-height: 1.8;
-      color: #c5cdd8;
-    }
-    /* 成果标题 */
-    .section-title {
-      font-size: 26px;
-      margin-bottom: 32px;
-      position: relative;
-    }
-    .section-title::after {
-      content: "";
-      display: block;
-      width: 60px;
-      height: 2px;
-      background: #64a8ff;
-      margin: 12px auto 0;
-    }
-    /* 项目卡片容器 */
-    .project-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-    }
-    /* 项目卡片 */
-    .project-card {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(100, 168, 255, 0.15);
-      padding: 28px 16px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .project-card:hover {
-      background: rgba(100, 168, 255, 0.12);
-      border-color: rgba(100, 168, 255, 0.4);
-      transform: translateY(-6px);
-    }
-    .project-name {
-      font-size: 19px;
-      font-weight: 500;
-      margin-bottom: 10px;
-    }
-    .project-desc {
-      font-size: 14px;
-      color: #a0aabc;
-      line-height: 1.6;
-    }
-    /* 底部留白 */
-    footer {
-      margin-top: 80px;
-      color: #777;
-      font-size: 14px;
-    }
+  <link rel="icon" href="https://bu.dusays.com/2026/07/09/6a4f74df696d4.jpg" />
+  <link rel="stylesheet" href="./style.css" />
 
-    .project-card-a{
-      text-decoration: none;
-      color:#f0f0f0;
-    }
-  </style>
+  <!-- 站点统计代码 -->
+  <script>
+!function(p){"use strict";!function(t){var s=window,e=document,i=p,c="".concat("https:"===e.location.protocol?"https://":"http://","sdk.51.la/js-sdk-pro.min.js"),n=e.createElement("script"),r=e.getElementsByTagName("script")[0];n.type="text/javascript",n.setAttribute("charset","UTF-8"),n.async=!0,n.src=c,n.id="LA_COLLECT",i.d=n;var o=function(){s.LA.ids.push(i)};s.LA?s.LA.ids&&o():(s.LA=p,s.LA.ids=[],o()),r.parentNode.insertBefore(n,r)}()}({id:"3QbALR0hOa6rQcCo",ck:"3QbALR0hOa6rQcCo"});
+</script>
+
 </head>
 <body>
-  <!-- 粒子背景画布 -->
-  <canvas id="particles-canvas"></canvas>
 
   <div class="container">
     <!-- 头像区域 -->
@@ -199,92 +86,9 @@
     </div>
 
     <footer>
-      © 2026 东子个人主页 | Code by Doubao
+      © 2026 东子个人主页
     </footer>
   </div>
 
-  <script>
-    // 粒子特效逻辑
-    const canvas = document.getElementById("particles-canvas");
-    const ctx = canvas.getContext("2d");
-    let width, height;
-    let particles = [];
-
-    // 适配窗口尺寸
-    function resizeCanvas() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    // 粒子类
-    class Particle {
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.radius = Math.random() * 1.2 + 0.3;
-        this.speedX = Math.random() * 0.6 - 0.3;
-        this.speedY = Math.random() * 0.6 - 0.3;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        // 边界回弹
-        if (this.x < 0 || this.x > width) this.speedX *= -1;
-        if (this.y < 0 || this.y > height) this.speedY *= -1;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(100, 168, 255, 0.6)";
-        ctx.fill();
-      }
-    }
-
-    // 初始化粒子
-    function initParticles(count = 80) {
-      particles = [];
-      for (let i = 0; i < count; i++) {
-        particles.push(new Particle());
-      }
-    }
-    initParticles();
-
-    // 粒子连线
-    function drawLine(p1, p2) {
-      const dx = p1.x - p2.x;
-      const dy = p1.y - p2.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 100) {
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.strokeStyle = `rgba(100, 168, 255, ${0.3 - dist / 350})`;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-      }
-    }
-
-    // 动画循环
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
-      // 两两连线
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          drawLine(particles[i], particles[j]);
-        }
-      }
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-  </script>
 </body>
 </html>
